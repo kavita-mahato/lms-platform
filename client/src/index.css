@@ -5,3 +5,23 @@
 *{
     font-family: Outfit, sans-serif;
 }
+
+@theme {
+  /* course details */
+  --text-course-details-heading-small: 26px;
+  --leading-course-details-heading-small: 36px;
+
+  --text-course-details-heading-large: 36px;
+  --leading-course-details-heading-large: 44px;
+
+  /* home headings */
+  --text-home-heading-small: 28px;
+  --leading-home-heading-small: 34px;
+
+  --text-home-heading-large: 48px;
+  --leading-home-heading-large: 56px;
+
+  /* default text */
+  --text-default: 15px;
+  --leading-default: 21px;
+}
