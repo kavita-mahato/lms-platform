@@ -117,6 +117,7 @@ export const dummyTestimonial = [
 
 export const dummyCourses = [
     {
+        _id: "1",
         courseTitle: "Introduction to JavaScript",
         courseDescription: `
             <h2>Learn the Basics of JavaScript</h2>
@@ -128,7 +129,7 @@ export const dummyCourses = [
                 <li>Create dynamic web applications</li>
             </ul>
         `,
-        courseThumbnail: "https://example.com/thumbnails/js-course.jpg",
+        courseThumbnail: "https://i.ytimg.com/vi/_y9oxzTGERs/maxresdefault.jpg",
         coursePrice: 49.99,
         isPublished: true,
         discount: 20,
@@ -196,6 +197,7 @@ export const dummyCourses = [
         ]
     },
     {
+        _id: "2",
         courseTitle: "Advanced Python Programming",
         courseDescription: `
             <h2>Deep Dive into Python Programming</h2>
@@ -207,7 +209,7 @@ export const dummyCourses = [
                 <li>Work with libraries and frameworks</li>
             </ul>
         `,
-        courseThumbnail: "https://example.com/thumbnails/python-course.jpg",
+        courseThumbnail: "https://courses.wscubetech.com/s/store/courses/62726cff0cf2d4a08e0f2d19/cover.jpg?v=1",
         coursePrice: 79.99,
         isPublished: true,
         discount: 15,
@@ -275,6 +277,7 @@ export const dummyCourses = [
         ]
     },
     {
+        _id: "3",
         courseTitle: "Web Development Bootcamp",
         courseDescription: `
             <h2>Become a Full-Stack Web Developer</h2>
@@ -286,7 +289,7 @@ export const dummyCourses = [
                 <li>Understand databases and server-side programming</li>
             </ul>
         `,
-        courseThumbnail: "https://example.com/thumbnails/web-dev-bootcamp.jpg",
+        courseThumbnail: "https://th.bing.com/th/id/OIP.GIYu8KFM91iTmT1ren8rSwHaEo?w=278&h=180&c=7&r=0&o=7&pid=1.7&rm=3",
         coursePrice: 99.99,
         isPublished: true,
         discount: 25,
@@ -354,6 +357,7 @@ export const dummyCourses = [
         ]
     },
     {
+        _id: "4",
         courseTitle: "Data Science and Machine Learning",
         courseDescription: `
             <h2>Unlock the Power of Data</h2>
@@ -365,7 +369,7 @@ export const dummyCourses = [
                 <li>Work with popular data science libraries like Pandas and Scikit-Learn</li>
             </ul>
         `,
-        courseThumbnail: "https://example.com/thumbnails/data-science.jpg",
+        courseThumbnail: "https://dz8fbjd9gwp2s.cloudfront.net/courses/62bbe7ac0cf2069403e03f1b/62bbe7ac0cf2069403e03f1b_scaled_cover.jpg?v=1",
         coursePrice: 89.99,
         isPublished: true,
         discount: 30,

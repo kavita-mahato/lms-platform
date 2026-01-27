@@ -24,4 +24,7 @@
   /* default text */
   --text-default: 15px;
   --leading-default: 21px;
+
+  /* spacing */
+  --section-height: 500px;
 }
