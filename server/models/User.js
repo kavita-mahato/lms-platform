@@ -11,8 +11,6 @@ const userSchema = new mongoose.Schema({
                 ref: 'Course'
             }
         ],
-        password: {type: String, required: true},
-        role: {type: String, enum: ['student', 'instructor'], required: true},
     }, {timestamps: true}
 );
 
