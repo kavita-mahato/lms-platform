@@ -1,8 +1,8 @@
-import { Webhook } from '../models/webhook.js';
+import { Webhook } from 'svix';
 import User from '../models/user.js';
 
 // API Controller function to manage Clerk User with Webhooks
-const clertWebHooks = async (req, res) => {
+export const clerkWebHooks = async (req, res) => {
     try{
         const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
         await whook.verify(JSON.stringify(req.body), {

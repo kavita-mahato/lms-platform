@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
 import connectDB from './configs/mongodb.js';
+import { clerkWebHooks } from './controllers/webhooks.js';
 
 // Initialize Express app
 const app = express();
@@ -18,6 +19,7 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send('Welcome to the LMS Platform API');
 });
+app.post('/clerk', express.json(), clerkWebHooks);
 
 // Start the server
 app.listen(PORT, () => {
