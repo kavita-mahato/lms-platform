@@ -9,7 +9,7 @@ const app = express();
 const PORT = 5000;
 
 // Connect to MongoDB
-await connectDB();
+connectDB();
 
 // Middleware
 app.use(cors());
@@ -22,9 +22,8 @@ app.get('/', (req, res) => {
 app.post('/clerk', express.json(), clerkWebHooks);
 
 // Start the server
-/*
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-}); */
+});
 
 export default app;
