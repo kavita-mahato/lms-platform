@@ -6,7 +6,7 @@ import { clerkWebHooks } from './controllers/webhooks.js';
 
 // Initialize Express app
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 
 // Connect to MongoDB
 connectDB();
