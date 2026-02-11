@@ -3,6 +3,21 @@ import Course from '../models/Course.js';
 import { v2 as cloudinary } from 'cloudinary';
 import { Purchase } from "../models/Purchase.js";
 import User from "../models/User.js";
+import streamifier from "streamifier";
+
+const uploadFromBuffer = (buffer) => {
+  return new Promise((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      { folder: "courses" },
+      (error, result) => {
+        if (error) reject(error);
+        else resolve(result);
+      }
+    );
+
+    streamifier.createReadStream(buffer).pipe(stream);
+  });
+};
 
 // Controller to update user role to educator
 export const updateRoleToEducator = async (req, res) => {
@@ -21,26 +36,41 @@ export const updateRoleToEducator = async (req, res) => {
 
 // API Controller function to add a new Course
 export const addCourse = async (req, res) => {
-    try {
-        const courseData = req.body;
-        const imageFile = req.file;
-        const educatorId = req.auth.userId;
-        
-        if(!imageFile){
-            return res.status(400).json({ success: false, message: 'Course thumbnail is required' });
-        }
-        const parsedCourseData = await JSON.parse(courseData.courseData);
-        parsedCourseData.educator = educatorId;
-        const newCourse = await Course.create(parsedCourseData);
-        const imageUpload = await cloudinary.uploader.upload(imageFile.path);
-        newCourse.courseThumbnail = imageUpload.secure_url;
-        await newCourse.save();
+  try {
+    const imageFile = req.file;
+    const educatorId = req.auth.userId;
 
-        res.status(200).json({ success: true, message: 'Course created successfully'});
-    } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+    if (!imageFile) {
+      return res.status(400).json({
+        success: false,
+        message: "Course thumbnail is required",
+      });
     }
-}
+
+    // upload buffer → cloudinary
+    const uploadResult = await uploadFromBuffer(imageFile.buffer);
+
+    // parse course JSON
+    const parsedCourseData = JSON.parse(req.body.courseData);
+    parsedCourseData.educator = educatorId;
+    parsedCourseData.courseThumbnail = uploadResult.secure_url;
+
+    // save course
+    await Course.create(parsedCourseData);
+
+    res.status(200).json({
+      success: true,
+      message: "Course created successfully",
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
 // Get all courses for an educator
 export const getEducatorCourses = async (req, res) => {
