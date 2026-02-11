@@ -1,4 +1,4 @@
-import Course from "../models/Course.js"
+import Course from "../models/Course.js";
 
 // Get All Courses
 export const getAllCourse = async (req, res) => {
@@ -19,6 +19,10 @@ export const getCourseId = async (req, res) => {
     const { id } = req.params
     try {
         const courseData = await Course.findById(id).populate({ path: 'educator'});
+
+        if (!courseData) {
+            return res.status(404).json({ success: false, message: 'Course not found' });
+        }
 
         // Remove lectureUrl if isPreviewFree is false
         courseData.courseContent.forEach(chapter => {
