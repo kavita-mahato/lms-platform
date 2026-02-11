@@ -27,7 +27,7 @@ export const addCourse = async (req, res) => {
         const educatorId = req.auth.userId;
         
         if(!imageFile){
-            return res.status(500).json({ success: false, message: 'Course thumbnail is required' });
+            return res.status(400).json({ success: false, message: 'Course thumbnail is required' });
         }
         const parsedCourseData = await JSON.parse(courseData.courseData);
         parsedCourseData.educator = educatorId;
