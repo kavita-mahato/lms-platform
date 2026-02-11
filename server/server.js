@@ -19,7 +19,11 @@ await connectCloudinary();
 
 // Middleware
 app.use(cors());
-app.use(express.json());
+
+// Stripe webhook MUST be before any body parser / auth middleware
+app.post('/stripe', express.raw({ type: 'application/json' }), stripeWebhooks);
+
+// Clerk & JSON body parsing for the rest of the app
 app.use(clerkMiddleware());
 
 // Routes
@@ -27,8 +31,6 @@ app.get('/', (req, res) => {
   res.send('Welcome to the LMS Platform API');
 });
 app.post('/clerk', express.json(), clerkWebHooks);
-app.post('/clerk', express.json() , clerkWebHooks);
-app.post('/stripe', express.raw({ type: 'application/json' }), stripeWebhooks);
 app.use('/api/educator', express.json(), educatorRouter);
 app.use('/api/course', express.json(), courseRouter);
 app.use('/api/user', express.json(), userRouter);
