@@ -10,6 +10,3 @@ logs/
 
 # Environment variables
 .env
-
-# Uploaded files (if any)
-uploads/
