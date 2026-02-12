@@ -10,6 +10,8 @@ const AddCourse = () => {
 
   const editorRef = useRef(null);
   const quillRef = useRef(null);
+
+  const { backendUrl, getToken } = useContext(AppContext);
   
   const [courseTitle, setCourseTitle] = useState('');
   const [coursePrice, setCoursePrice] = useState(0);
@@ -90,11 +92,10 @@ const AddCourse = () => {
 
   const handleSubmit = async (e) => {
     try {
-
       e.preventDefault();
 
       if (!image) {
-        toast.error('Thumbnail Not Selected')
+        toast.error('Thumbnail Not Selected');
       }
 
       const courseData = {
@@ -104,31 +105,28 @@ const AddCourse = () => {
         discount: Number(discount),
         courseContent: chapters,
       }
+      const formData = new FormData();
+      formData.append('courseData', JSON.stringify(courseData));
+      formData.append('image', image);
 
-      const formData = new FormData()
-      formData.append('courseData', JSON.stringify(courseData))
-      formData.append('image', image)
-
-      const token = await getToken()
-
+      const token = await getToken();
       const { data } = await axios.post(backendUrl + '/api/educator/add-course', formData,
         { headers: { Authorization: `Bearer ${token}` } }
-      )
-
+      );
       if (data.success) {
-        toast.success(data.message)
-        setCourseTitle('')
-        setCoursePrice(0)
-        setDiscount(0)
-        setImage(null)
-        setChapters([])
+        toast.success(data.message);
+        setCourseTitle('');
+        setCoursePrice(0);
+        setDiscount(0);
+        setImage(null);
+        setChapters([]);
         quillRef.current.root.innerHTML = ""
-      } else (
-        toast.error(data.message)
-      )
+      } else {
+        toast.error(data.message);
+      }
 
     } catch (error) {
-      toast.error(error.message)
+      toast.error(error.message);
     }
 
   };
