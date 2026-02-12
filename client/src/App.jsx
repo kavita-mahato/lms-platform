@@ -1,19 +1,20 @@
-import React from 'react'
-import { Route, Routes, useMatch } from 'react-router-dom'
-import Home from './pages/student/Home.jsx'
-import CoursesList from './pages/student/CoursesList.jsx'
-import CourseDetails from './pages/student/CourseDetails.jsx'
-import MyEnrollments from './pages/student/MyEnrollments.jsx'
-import Player from './pages/student/Player.jsx'
-import Loading from './components/student/Loading'
-import Educator from './pages/educator/Educator'
-import Dashboard from './pages/educator/Dashboard'
-import AddCourse from './pages/educator/AddCourse'
-import MyCourses from './pages/educator/MyCourses'
-import StudentsEnrolled from './pages/educator/StudentsEnrolled'
-import Navbar from './components/student/Navbar.jsx'
+import React from 'react';
+import { Route, Routes, useMatch } from 'react-router-dom';
 import "quill/dist/quill.snow.css";
 import { ToastContainer } from 'react-toastify';
+import Home from './pages/student/Home.jsx';
+import CoursesList from './pages/student/CoursesList.jsx';
+import CourseDetails from './pages/student/CourseDetails.jsx';
+import MyEnrollments from './pages/student/MyEnrollments.jsx';
+import Player from './pages/student/Player.jsx';
+import Loading from './components/student/Loading';
+import Educator from './pages/educator/Educator';
+import Dashboard from './pages/educator/Dashboard';
+import AddCourse from './pages/educator/AddCourse';
+import MyCourses from './pages/educator/MyCourses';
+import EditCourse from './pages/educator/EditCourse';
+import StudentsEnrolled from './pages/educator/StudentsEnrolled';
+import Navbar from './components/student/Navbar.jsx';
 
 const App = () => {
 
@@ -36,6 +37,7 @@ const App = () => {
           <Route path='add-course' element={<AddCourse />} />
           <Route path='my-courses' element={<MyCourses />} />
           <Route path='student-enrolled' element={<StudentsEnrolled />} />
+          <Route path="edit-course/:courseId" element={<EditCourse />} />
         </Route>
       </Routes>
     </div>

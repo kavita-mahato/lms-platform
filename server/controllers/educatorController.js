@@ -155,3 +155,41 @@ export const getEnrolledStudentsData = async (req, res) => {
         res.status(500).json({success: false, message: error.message});
     }
 };
+
+// Edit/Update Course
+export const updateCourse = async (req, res) => {
+  try {
+    const { courseId } = req.params;
+    const educatorId = req.auth.userId;
+    const imageFile = req.file;
+
+    // Find course and verify ownership
+    const course = await Course.findById(courseId);
+    if (!course) {
+      return res.status(404).json({ success: false, message: "Course not found" });
+    }
+    if (course.educator !== educatorId) {
+      return res.status(403).json({ success: false, message: "Unauthorized" });
+    }
+
+    // Parse updated course data
+    const updatedData = JSON.parse(req.body.courseData);
+
+    // If new thumbnail uploaded, upload to cloudinary
+    if (imageFile) {
+      const uploadResult = await uploadFromBuffer(imageFile.buffer);
+      updatedData.courseThumbnail = uploadResult.secure_url;
+    }
+
+    // Update course
+    const updatedCourse = await Course.findByIdAndUpdate(
+      courseId,
+      updatedData,
+      { new: true }
+    );
+
+    res.status(200).json({ success: true, message: "Course updated successfully", course: updatedCourse });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};

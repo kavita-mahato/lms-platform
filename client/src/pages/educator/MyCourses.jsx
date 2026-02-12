@@ -3,6 +3,7 @@ import AppContext from '../../context/AppContext';
 import Loading from '../../components/student/Loading';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router-dom';
 
 const MyCourses = () => {
 
@@ -55,6 +56,15 @@ const MyCourses = () => {
                   <td className="px-4 py-3">{course.enrolledStudents.length}</td>
                   <td className="px-4 py-3">
                     {new Date(course.createdAt).toLocaleDateString()}
+                  </td>
+                  {/* Edit Course */}
+                  <td className="px-4 py-3">
+                    <Link 
+                      to={`/educator/edit-course/${course._id}`}
+                      className="text-blue-500 hover:underline"
+                    >
+                      Edit
+                    </Link>
                   </td>
                 </tr>
               ))}
