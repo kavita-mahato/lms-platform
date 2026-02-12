@@ -7,15 +7,20 @@ import CourseCard from '../../components/student/CourseCard';
 import { assets } from '../../assets/assets';
 
 const CoursesList = () => {
-  const {navigate, allCourses} = useContext(AppContext);
-  const {input} = useParams();
+  const { navigate, allCourses } = useContext(AppContext);
+  const { input } = useParams();
   
   const filteredCourses = useMemo(() => {
-    if (allCourses && allCourses.length > 0) {
-      const tempCourses = allCourses.slice();
-      return input ? tempCourses.filter(item => item.courseTitle.toLowerCase().includes(input.toLowerCase())) : tempCourses;
-    }
-    return [];
+    if (!allCourses || allCourses.length === 0) return [];
+
+    const tempCourses = allCourses.slice();
+    const term = input?.trim();
+
+    if (!term) return tempCourses;
+
+    return tempCourses.filter(item =>
+      item.courseTitle.toLowerCase().includes(term.toLowerCase())
+    );
   }, [allCourses, input]);
 
   return (
@@ -33,7 +38,7 @@ const CoursesList = () => {
           <SearchBar data={input}/>
         </div>
         {
-          input && <div className='inline-flex items-center gap-4 px-4 py-2 border mt-8 -mb-8 text-gray-600'>
+          input && input.trim() && <div className='inline-flex items-center gap-4 px-4 py-2 border mt-8 -mb-8 text-gray-600'>
             <p>{input}</p>
             <img src={assets.cross_icon} alt="" className='cursor-pointer' onClick={() => navigate('/course-list')}/>
           </div>

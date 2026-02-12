@@ -2,15 +2,22 @@ import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import { assets } from '../../assets/assets'
 
-const SearchBar = ({data}) => {
+const SearchBar = ({ data }) => {
 
   const navigate = useNavigate();
-  const [input, setInput] = useState(data ? data : " ");
+  const [input, setInput] = useState(data || '');
 
   // To handle search
   const onSearchHandller = (e) => {
     e.preventDefault();
-    navigate("/course-list/" + input);
+    const trimmed = input.trim();
+
+    if (!trimmed) {
+      navigate('/course-list');
+      return;
+    }
+
+    navigate('/course-list/' + encodeURIComponent(trimmed));
   };
 
   return (
