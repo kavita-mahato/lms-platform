@@ -8,22 +8,39 @@ const CourseCard = ({course}) => {
   const {currency, calculateRating} = useContext(AppContext);
 
   return (
-    <Link to={`/course/${course._id}`} onClick={() => scrollTo(0, 0,)} className='border border-gray-300 rounded-lg p-3 md:p-3 flex flex-col gap-4 hover:shadow-lg transition-shadow duration-300 overflow-hidden'>
-      <img src={course.courseThumbnail} alt="Thumbnail" className='w-full'/>
-      <div className='p-2 text-left'>
-        <h3 className='text-base font-semibold'>{course.courseTitle}</h3>
-        <p className='text-gray-500'>{course.educator?.name || 'Unknown Educator'}</p>
+    <Link
+      to={`/course/${course._id}`}
+      onClick={() => scrollTo(0, 0)}
+      className='group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white p-3 md:p-3 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md'
+    >
+      <div className="relative overflow-hidden rounded-lg">
+        <img
+          src={course.courseThumbnail}
+          alt="Thumbnail"
+          className='w-full transition-transform duration-300 group-hover:scale-105'
+        />
+      </div>
+      <div className='p-2 text-left space-y-1.5'>
+        <h3 className='text-sm font-semibold text-slate-900 line-clamp-2'>{course.courseTitle}</h3>
+        <p className='text-xs text-slate-500'>{course.educator?.name || 'Unknown Educator'}</p>
         {/* Rating & Reviews */}
-        <div className='flex items-center space-x-2'>
-          <p>{calculateRating(course)}</p>
+        <div className='mt-1 flex items-center space-x-2'>
+          <p className="text-xs font-medium text-slate-700">{calculateRating(course)}</p>
           <div className='flex'>
             {[...Array(5)].map((_, i) => (
-              <img key={i} src={i < Math.floor(calculateRating(course)) ? assets.star : assets.star_blank} alt="" className='w-3.5 h-3.5'/>
+              <img
+                key={i}
+                src={i < Math.floor(calculateRating(course)) ? assets.star : assets.star_blank}
+                alt=""
+                className='h-3.5 w-3.5'
+              />
             ))}
           </div>
-          <p className='text-gray-500'>({course.courseRatings.length})</p>
+          <p className='text-xs text-slate-500'>({course.courseRatings.length})</p>
         </div>
-        <p className='text-base font-semibold text-gray-800'>{currency}{(course.coursePrice - course.discount * course.coursePrice / 100).toFixed(2)}</p>
+        <p className='pt-1 text-sm font-semibold text-slate-900'>
+          {currency}{(course.coursePrice - course.discount * course.coursePrice / 100).toFixed(2)}
+        </p>
       </div>
     </Link>
   )

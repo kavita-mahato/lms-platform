@@ -60,7 +60,7 @@ const MyEnrollments = () => {
             {enrolledCourses.map((course, index) => (
               <tr key={index} className='border border-gray-500/20'>
                 <td className='md:px-4 pl-2 md:pl-4 py-3 flex items-center space-x-3'>
-                  <img src={course.courseThumbnail} alt="" className='w-14 sm:w-24 md:w-28' />
+                  <img src={course.courseThumbnail} alt="" className='w-14 sm:w-24 md:w-28 rounded-md' />
                   <div className='flex-1'>
                     <p className='mb-1 max-sm:text-sm'>{course.courseTitle}</p>
                     <Line percent={progressArray[index] ? (progressArray[index].lectureCompleted / progressArray[index].totalLectures) * 100 : 0} strokeWidth={1} strokeColor="#3b82f6" className='mt-1' />

@@ -5,17 +5,31 @@ import { Link } from 'react-router-dom';
 
 const NavBar = () => {
   const educatordata = dummyEducatorData;
-  const {user} = useUser();
+  const { user } = useUser();
+
   return (
-    <div className='flex items-center justify-between px-4 md:px-8 border-b border-gray-500 py-3'>
-      <Link to='/'>
-        <img src={assets.logo} alt="logo" className='w-28 lg:w-32'/>
-      </Link>
-      <div className='flex items-center gap-5 text-gray-500'>
-        <p>Hi! {user ? user.fullName : 'Developers'}</p>
-        {user ? <UserButton/> : <img className='max-w-8' src={assets.profile_img} alt="profile image"/>}
+    <header className="w-full border-b border-slate-200 bg-white/90 backdrop-blur">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-8">
+        <Link to='/'>
+          <img src={assets.logo} alt="logo" className='w-24 lg:w-28' />
+        </Link>
+
+        <div className='flex items-center gap-4 text-sm text-slate-600'>
+          <p className="hidden sm:block">
+            Hi, <span className="font-medium text-slate-900">{user ? user.fullName : 'Educator'}</span>
+          </p>
+          {user ? (
+            <UserButton />
+          ) : (
+            <img
+              className='h-9 w-9 rounded-full border border-slate-200 object-cover'
+              src={assets.profile_img}
+              alt="profile"
+            />
+          )}
+        </div>
       </div>
-    </div>
+    </header>
   )
 }
 

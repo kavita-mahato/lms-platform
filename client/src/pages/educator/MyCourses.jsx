@@ -32,36 +32,55 @@ const MyCourses = () => {
   }, [isEducator]);
 
   return courses ? (
-    <div className="h-screen flex flex-col items-start justify-between md:p-8 md:pb-0 p-4 pt-8 pb-0">
-      <div className='w-full'>
-        <h2 className="pb-4 text-lg font-medium">My Courses</h2>
-        <div className="flex flex-col items-center max-w-4xl w-full overflow-hidden rounded-md bg-white border border-gray-500/20">
-          <table className="md:table-auto table-fixed w-full overflow-hidden">
-            <thead className="text-gray-900 border-b border-gray-500/20 text-sm text-left">
+    <div className="min-h-screen bg-slate-50 px-4 pt-8 pb-6 md:px-8">
+      <div className='mx-auto w-full max-w-5xl space-y-4'>
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-slate-900">My courses</h2>
+        </div>
+
+        <div className="overflow-hidden rounded-2xl bg-white border border-slate-200 shadow-sm">
+          <table className="w-full table-fixed md:table-auto">
+            <thead className="bg-slate-50/80 text-xs font-medium uppercase tracking-wide text-slate-500 border-b border-slate-200">
               <tr>
-                <th className="px-4 py-3 font-semibold truncate">All Courses</th>
-                <th className="px-4 py-3 font-semibold truncate">Earnings</th>
-                <th className="px-4 py-3 font-semibold truncate">Students</th>
-                <th className="px-4 py-3 font-semibold truncate">Published On</th>
+                <th className="px-4 py-3 text-left">Course</th>
+                <th className="px-4 py-3 text-left">Earnings</th>
+                <th className="px-4 py-3 text-left">Students</th>
+                <th className="px-4 py-3 text-left">Published</th>
+                <th className="px-4 py-3 text-left w-24">Actions</th>
               </tr>
             </thead>
-            <tbody className="text-sm text-gray-500">
+            <tbody className="text-sm text-slate-600">
               {courses.map((course) => (
-                <tr key={course._id} className="border-b border-gray-500/20">
-                  <td className="md:px-4 pl-2 md:pl-4 py-3 flex items-center space-x-3 truncate">
-                    <img src={course.courseThumbnail} alt="Course Image" className="w-16" />
-                    <span className="truncate hidden md:block">{course.courseTitle}</span>
+                <tr key={course._id} className="border-t border-slate-100">
+                  <td className="md:px-4 pl-2 md:pl-4 py-3 align-middle">
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={course.courseThumbnail}
+                        alt="Course"
+                        className="w-16 rounded-sm"
+                      />
+                      <span className="hidden md:block truncate font-medium text-slate-900">
+                        {course.courseTitle}
+                      </span>
+                    </div>
                   </td>
-                  <td className="px-4 py-3">{currency} {Math.floor(course.enrolledStudents.length * (course.coursePrice - course.discount * course.coursePrice / 100))}</td>
-                  <td className="px-4 py-3">{course.enrolledStudents.length}</td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-3 align-middle">
+                    {currency}{' '}
+                    {Math.floor(
+                      course.enrolledStudents.length *
+                      (course.coursePrice - (course.discount * course.coursePrice) / 100)
+                    )}
+                  </td>
+                  <td className="px-4 py-3 align-middle">
+                    {course.enrolledStudents.length}
+                  </td>
+                  <td className="px-4 py-3 align-middle">
                     {new Date(course.createdAt).toLocaleDateString()}
                   </td>
-                  {/* Edit Course */}
-                  <td className="px-4 py-3">
-                    <Link 
+                  <td className="px-4 py-3 align-middle">
+                    <Link
                       to={`/educator/edit-course/${course._id}`}
-                      className="text-blue-500 hover:underline"
+                      className="inline-flex items-center rounded-full border border-slate-300 px-3 py-1 text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors"
                     >
                       Edit
                     </Link>

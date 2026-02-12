@@ -161,13 +161,14 @@ const EditCourse = () => {
   };
 
   return (
-    <div className="p-6 max-w-6xl mx-auto space-y-8">
-      {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="bg-white rounded-2xl shadow-sm p-6 space-y-4"
-      >
+    <div className="min-h-screen bg-slate-50 px-4 py-8">
+      <div className="max-w-6xl mx-auto space-y-8">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white rounded-2xl shadow-sm p-6 space-y-4 border border-slate-200"
+        >
         <h1 className="text-2xl font-semibold">Edit Course</h1>
 
         <input
@@ -204,17 +205,17 @@ const EditCourse = () => {
         <div className="border rounded-xl">
           <div ref={editorContainerRef} className="min-h-[150px]" />
         </div>
-      </motion.div>
+        </motion.div>
 
-      {/* Chapters */}
-      <div className="space-y-6">
-        {chapters.map((chapter) => (
-          <motion.div
-            key={chapter.chapterId}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="bg-white rounded-2xl shadow-sm p-5"
-          >
+        {/* Chapters */}
+        <div className="space-y-6">
+          {chapters.map((chapter) => (
+            <motion.div
+              key={chapter.chapterId}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="bg-white rounded-2xl shadow-sm p-5 border border-slate-200"
+            >
             <div className="flex justify-between items-center mb-4">
               <h2 className="font-medium text-lg">
                 {chapter.chapterTitle}
@@ -257,18 +258,18 @@ const EditCourse = () => {
                 </div>
               ))}
             </div>
-          </motion.div>
-        ))}
-      </div>
+            </motion.div>
+          ))}
+        </div>
 
-      {/* Save */}
-      <motion.button
-        whileTap={{ scale: 0.97 }}
-        onClick={handleSave}
-        className="w-full bg-blue-600 text-white p-4 rounded-2xl font-medium flex justify-center items-center gap-2"
-      >
-        <Save size={18} /> Save Changes
-      </motion.button>
+        {/* Save */}
+        <motion.button
+          whileTap={{ scale: 0.97 }}
+          onClick={handleSave}
+          className="w-full bg-slate-900 text-white p-4 rounded-2xl font-medium flex justify-center items-center gap-2 shadow-sm"
+        >
+          <Save size={18} /> Save Changes
+        </motion.button>
 
       {/* Delete modal */}
       {deleteModal.show && (
@@ -301,6 +302,7 @@ const EditCourse = () => {
           </div>
         </div>
       )}
+      </div>
     </div>
   );
 };
