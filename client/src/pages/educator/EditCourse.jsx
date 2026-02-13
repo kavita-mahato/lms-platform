@@ -1,5 +1,5 @@
 import { useEffect, useContext, useState, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import AppContext from "../../context/AppContext";
 import axios from "axios";
 import Quill from "quill";
@@ -16,6 +16,7 @@ const cardAnim = {
 
 const EditCourse = () => {
   const { courseId } = useParams();
+  const navigate = useNavigate();
   const { getToken, backendUrl } = useContext(AppContext);
 
   const quillRef = useRef(null);
@@ -49,6 +50,9 @@ const EditCourse = () => {
   });
   const [deleteChapterConfirmText, setDeleteChapterConfirmText] =
     useState("");
+
+  const [deleteCourseModal, setDeleteCourseModal] = useState(false);
+  const [deleteCourseConfirmText, setDeleteCourseConfirmText] = useState("");
 
   const [editLectureModal, setEditLectureModal] = useState({
     show: false,
@@ -269,6 +273,33 @@ const EditCourse = () => {
     }
   };
 
+  const confirmDeleteCourse = async () => {
+    if (deleteCourseConfirmText !== "Delete course") {
+      toast.error('Type "Delete course" to confirm');
+      return;
+    }
+
+    try {
+      const token = await getToken();
+      const { data } = await axios.delete(
+        `${backendUrl}/api/educator/course/${courseId}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+
+      if (data.success) {
+        toast.success("Course deleted successfully");
+        navigate("/educator");
+      } else {
+        toast.error(data.message || "Failed to delete course");
+      }
+    } catch {
+      toast.error("Failed to delete course");
+    }
+
+    setDeleteCourseModal(false);
+    setDeleteCourseConfirmText("");
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white px-4 py-10">
       <div className="max-w-6xl mx-auto space-y-8">
@@ -277,13 +308,21 @@ const EditCourse = () => {
           {...cardAnim}
           className="bg-white rounded-3xl shadow-sm border border-slate-200 p-6 md:p-8 space-y-6"
         >
-          <div className="flex flex-col gap-1">
-            <h1 className="text-2xl md:text-3xl font-semibold text-slate-900">
-              Edit Course
-            </h1>
-            <p className="text-sm text-slate-500">
-              Update details, pricing, and curriculum.
-            </p>
+          <div className="flex items-start justify-between">
+            <div className="flex flex-col gap-1">
+              <h1 className="text-2xl md:text-3xl font-semibold text-slate-900">
+                Edit Course
+              </h1>
+              <p className="text-sm text-slate-500">
+                Update details, pricing, and curriculum.
+              </p>
+            </div>
+            <button
+              onClick={() => setDeleteCourseModal(true)}
+              className="flex items-center gap-2 px-4 py-2 text-red-600 border border-red-200 rounded-full hover:bg-red-50 transition-colors text-sm font-medium"
+            >
+              <Trash2 size={16} /> Delete Course
+            </button>
           </div>
 
           <input
@@ -450,6 +489,21 @@ const EditCourse = () => {
             setInput={setDeleteChapterConfirmText}
             onCancel={() => setDeleteChapterModal({ show: false })}
             onConfirm={confirmDeleteChapter}
+          />
+        )}
+
+        {/* Delete Course Modal */}
+        {deleteCourseModal && (
+          <Modal
+            title="Delete Course"
+            confirmText="Delete course"
+            input={deleteCourseConfirmText}
+            setInput={setDeleteCourseConfirmText}
+            onCancel={() => {
+              setDeleteCourseModal(false);
+              setDeleteCourseConfirmText("");
+            }}
+            onConfirm={confirmDeleteCourse}
           />
         )}
 
