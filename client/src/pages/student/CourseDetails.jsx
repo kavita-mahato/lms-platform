@@ -135,7 +135,7 @@ const CourseDetails = () => {
                           <div className='flex items-center justify-between w-full text-gray-800 text-xs md:text-default'>
                             <p>{lecture.lectureTitle}</p>
                             <div className='flex gap-2'>
-                              {lecture.isPreviewFree && <p
+                              {lecture.lectureUrl && <p
                                 onClick={() => {
                                   const id = getYoutubeId(lecture.lectureUrl);
                                   if (id) setPlayerData({ videoId: id });

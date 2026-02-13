@@ -50,6 +50,18 @@ const EditCourse = () => {
   const [deleteChapterConfirmText, setDeleteChapterConfirmText] =
     useState("");
 
+  const [editLectureModal, setEditLectureModal] = useState({
+    show: false,
+    chapterId: null,
+    lectureIndex: null,
+  });
+  const [editLectureDetails, setEditLectureDetails] = useState({
+    lectureTitle: "",
+    lectureDuration: "",
+    lectureUrl: "",
+    isPreviewFree: false,
+  });
+
   useEffect(() => {
     if (!quillRef.current && editorContainerRef.current) {
       quillRef.current = new Quill(editorContainerRef.current, {
@@ -194,6 +206,37 @@ const EditCourse = () => {
 
     setDeleteChapterModal({ show: false, chapterId: null });
     setDeleteChapterConfirmText("");
+  };
+
+  const handleEditLecture = (chapterId, lectureIndex, lecture) => {
+    setEditLectureModal({ show: true, chapterId, lectureIndex });
+    setEditLectureDetails({
+      lectureTitle: lecture.lectureTitle,
+      lectureDuration: lecture.lectureDuration,
+      lectureUrl: lecture.lectureUrl,
+      isPreviewFree: lecture.isPreviewFree,
+    });
+  };
+
+  const saveEditedLecture = () => {
+    const { chapterId, lectureIndex } = editLectureModal;
+
+    setChapters((prev) =>
+      prev.map((chapter) => {
+        if (chapter.chapterId !== chapterId) return chapter;
+        return {
+          ...chapter,
+          chapterContent: chapter.chapterContent.map((lec, i) =>
+            i === lectureIndex
+              ? { ...lec, ...editLectureDetails }
+              : lec
+          ),
+        };
+      })
+    );
+
+    setEditLectureModal({ show: false, chapterId: null, lectureIndex: null });
+    toast.success("Lecture updated! Click 'Save Changes' to persist.");
   };
 
   const handleSave = async (e) => {
@@ -354,6 +397,14 @@ const EditCourse = () => {
                       <div className="flex gap-3">
                         <button
                           onClick={() =>
+                            handleEditLecture(chapter.chapterId, i, lec)
+                          }
+                          className="text-slate-500 hover:text-slate-700"
+                        >
+                          <Pencil size={16} />
+                        </button>
+                        <button
+                          onClick={() =>
                             handleDeleteLecture(chapter.chapterId, i)
                           }
                           className="text-red-500 hover:text-red-600"
@@ -400,6 +451,75 @@ const EditCourse = () => {
             onCancel={() => setDeleteChapterModal({ show: false })}
             onConfirm={confirmDeleteChapter}
           />
+        )}
+
+        {/* Edit Lecture Modal */}
+        {editLectureModal.show && (
+          <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="w-full max-w-md bg-white rounded-3xl p-6 shadow-xl space-y-4 relative"
+            >
+              <h2 className="font-semibold text-slate-900">Edit lecture</h2>
+
+              {[
+                ["Lecture title", "lectureTitle"],
+                ["Duration (minutes)", "lectureDuration"],
+                ["Lecture URL", "lectureUrl"],
+              ].map(([label, key]) => (
+                <div key={key} className="space-y-1">
+                  <p className="text-xs text-slate-500">{label}</p>
+                  <input
+                    value={editLectureDetails[key]}
+                    onChange={(e) =>
+                      setEditLectureDetails({
+                        ...editLectureDetails,
+                        [key]: e.target.value,
+                      })
+                    }
+                    className="w-full rounded-xl border border-slate-200 px-3 py-2 text-sm"
+                  />
+                </div>
+              ))}
+
+              <label className="flex items-center gap-2 text-sm text-slate-600">
+                <input
+                  type="checkbox"
+                  checked={editLectureDetails.isPreviewFree}
+                  onChange={(e) =>
+                    setEditLectureDetails({
+                      ...editLectureDetails,
+                      isPreviewFree: e.target.checked,
+                    })
+                  }
+                />
+                Free preview
+              </label>
+
+              <div className="flex gap-3 pt-2">
+                <button
+                  onClick={() => setEditLectureModal({ show: false })}
+                  className="flex-1 border border-slate-300 rounded-xl py-2 text-sm"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={saveEditedLecture}
+                  className="flex-1 bg-slate-900 text-white rounded-xl py-2 text-sm"
+                >
+                  Save
+                </button>
+              </div>
+
+              <button
+                onClick={() => setEditLectureModal({ show: false })}
+                className="absolute top-4 right-4 text-slate-400 hover:text-slate-600"
+              >
+                <img src={assets.cross_icon} alt="close" className="h-4" />
+              </button>
+            </motion.div>
+          </div>
         )}
 
         {/* Lecture Popup */}
