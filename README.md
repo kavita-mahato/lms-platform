@@ -1,49 +1,53 @@
 # LMS Platform
 
-A full-stack Learning Management System built with React and Express.js, featuring course management, video playback, payment processing, and separate interfaces for students and educators.
+![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&logoColor=white)
+![Express](https://img.shields.io/badge/Express-5-000000?logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white)
+![Stripe](https://img.shields.io/badge/Stripe-008CDD?logo=stripe&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=white)
 
-## Features
+A full-stack Learning Management System with role-based portals for **Students** and **Educators**. Features secure authentication, Stripe payment processing, video content delivery, and progress tracking.
 
-### Student Portal
-- Browse and search courses
-- View detailed course information
-- Enroll in courses via Stripe payments
-- Track course progress
-- Video player for course content
+<!-- Add your deployed URL here -->
+<!-- 🔗 **[Live Demo](https://your-deployed-url.vercel.app)** -->
 
-### Educator Portal
-- Dashboard with analytics
-- Create and manage courses
-- Edit existing courses
-- View enrolled students
+## ✨ Key Features
 
-## Tech Stack
+### 🎓 Student Portal
+- **Course Discovery** – Browse, search, and filter courses
+- **Secure Payments** – Stripe-integrated checkout for course enrollment
+- **Progress Tracking** – Track completion status across enrolled courses
+- **Video Learning** – YouTube-based video player with chapter navigation
+- **Course Ratings** – Rate and review completed courses
 
-### Frontend
-- **React 19** with Vite
-- **Tailwind CSS 4** for styling
-- **React Router** for navigation
-- **Clerk** for authentication
-- **Framer Motion** for animations
-- **Quill** for rich text editing
-- **React YouTube** for video playback
+### 👨‍🏫 Educator Portal
+- **Analytics Dashboard** – View earnings, enrollments, and course performance
+- **Course Management** – Create, update, and delete courses with rich text descriptions
+- **Media Uploads** – Cloudinary-powered image uploads for course thumbnails
+- **Student Insights** – View enrolled students and their progress
 
-### Backend
-- **Express.js 5**
-- **MongoDB** with Mongoose ODM
-- **Clerk** for authentication
-- **Stripe** for payment processing
-- **Cloudinary** for media storage
-- **Multer** for file uploads
+### 🔐 Security & Auth
+- **Clerk Authentication** – Secure sign-up/sign-in with webhook sync
+- **Role-Based Access** – Protected routes for educators
+- **Webhook Handling** – Secure Stripe & Clerk webhook verification
 
-## Project Structure
+## 🛠️ Tech Stack
+
+**Frontend:**
+React • Vite • Tailwind CSS • React Router • Clerk • Quill Editor
+
+**Backend:**
+Express.js • MongoDB • Mongoose • Stripe • Cloudinary • Multer
+
+## 📁 Project Structure
 
 ```
 lms-platform/
 ├── client/                 # React frontend
 │   ├── src/
 │   │   ├── components/     # Reusable UI components
-│   │   ├── pages/          # Page components
+│   │   ├── pages/
 │   │   │   ├── student/    # Student-facing pages
 │   │   │   └── educator/   # Educator-facing pages
 │   │   ├── context/        # React context providers
@@ -52,27 +56,27 @@ lms-platform/
 ├── server/                 # Express backend
 │   ├── configs/            # Database & service configs
 │   ├── controllers/        # Route handlers
-│   ├── middlewares/        # Custom middleware
+│   ├── middlewares/        # Auth middleware
 │   ├── models/             # Mongoose schemas
 │   ├── routes/             # API route definitions
 │   └── server.js           # Entry point
 ```
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js (v18+)
+- Node.js v18+
 - MongoDB instance
-- Clerk account
-- Stripe account
-- Cloudinary account
+- [Clerk](https://clerk.com) account
+- [Stripe](https://stripe.com) account
+- [Cloudinary](https://cloudinary.com) account
 
 ### Environment Variables
 
 **Client (`client/.env`):**
 ```env
 VITE_CLERK_PUBLISHABLE_KEY=your_clerk_publishable_key
-VITE_BACKEND_URL=http://localhost:5000
+VITE_BACKEND_URL=backend_url || http://localhost:5000
 ```
 
 **Server (`server/.env`):**
@@ -89,54 +93,66 @@ CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 
 ### Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd lms-platform
-   ```
-
-2. **Install client dependencies**
-   ```bash
-   cd client
-   npm install
-   ```
-
-3. **Install server dependencies**
-   ```bash
-   cd ../server
-   npm install
-   ```
-
-### Running the Application
-
-**Start the backend server:**
 ```bash
-cd server
-npm run server
+# Clone the repository
+git clone https://github.com/kavita-mahato/lms-platform.git
+cd lms-platform
+
+# Install client dependencies
+cd client && npm install
+
+# Install server dependencies
+cd ../server && npm install
 ```
 
-**Start the frontend (in a new terminal):**
+### Run Locally
+
 ```bash
-cd client
-npm run dev
+# Terminal 1 - Start backend
+cd server && npm run server
+
+# Terminal 2 - Start frontend
+cd client && npm run dev
 ```
 
-The client runs on `http://localhost:5173` and the server on `http://localhost:5000`.
+- Frontend: `http://localhost:5173`
+- Backend: `http://localhost:5000`
 
-## API Endpoints
+## 📡 API Reference
 
+### Courses
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| `GET` | `/api/course/all` | Get all courses | ❌ |
+| `GET` | `/api/course/:id` | Get course by ID | ❌ |
+
+### Educator (Protected)
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/course` | Get all courses |
-| GET | `/api/course/:id` | Get course by ID |
-| POST | `/api/educator/add-course` | Create a new course |
-| PUT | `/api/educator/update-course` | Update a course |
-| GET | `/api/user/enrolled-courses` | Get user's enrolled courses |
-| POST | `/clerk` | Clerk webhook handler |
-| POST | `/stripe` | Stripe webhook handler |
+| `GET` | `/api/educator/update-role` | Upgrade user to educator |
+| `POST` | `/api/educator/add-course` | Create new course |
+| `GET` | `/api/educator/courses` | Get educator's courses |
+| `GET` | `/api/educator/dashboard` | Get dashboard analytics |
+| `GET` | `/api/educator/enrolled-students` | Get enrolled students |
+| `PUT` | `/api/educator/course/:courseId` | Update course |
+| `DELETE` | `/api/educator/course/:courseId` | Delete course |
 
+### User (Authenticated)
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/user/data` | Get user profile |
+| `GET` | `/api/user/enrolled-courses` | Get enrolled courses |
+| `POST` | `/api/user/purchase` | Initiate Stripe checkout |
+| `POST` | `/api/user/update-course-progress` | Update progress |
+| `POST` | `/api/user/get-course-progress` | Get course progress |
+| `POST` | `/api/user/add-rating` | Rate a course |
 
+### Webhooks
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/clerk` | Clerk webhook handler |
+| `POST` | `/stripe` | Stripe webhook handler |
 
-> *Thanks for visiting! If you liked this project, consider starring the repo.* ⭐
+> *Thanks for visiting! If you liked this project, consider starring⭐ the repo.*
 
 Built with ❤️ by **Kavita Mahato**
