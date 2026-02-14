@@ -89,11 +89,11 @@ const Dashboard = () => {
         <div className='grid gap-4 sm:grid-cols-3'>
           <div className='flex items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-sm border border-slate-200'>
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-900/5">
-              <img src={assets.patients_icon} alt="enrolments_icon" className="h-5 w-5" />
+              <img src={assets.patients_icon} alt="enrollments_icon" className="h-5 w-5" />
             </div>
             <div>
               <p className='text-2xl font-semibold text-slate-900'>{dashboardData.enrolledStudentsData.length}</p>
-              <p className='text-xs font-medium text-slate-500 tracking-wide uppercase'>Total enrolments</p>
+              <p className='text-xs font-medium text-slate-500 tracking-wide uppercase'>Total enrollments</p>
             </div>
           </div>
           <div className='flex items-center gap-3 rounded-2xl bg-white px-4 py-3 shadow-sm border border-slate-200'>
@@ -116,9 +116,9 @@ const Dashboard = () => {
           </div>
         </div>
 
-        {/* Latest enrolments */}
+        {/* Latest enrollments */}
         <section className="space-y-3">
-          <h2 className="text-lg font-semibold text-slate-900">Latest enrolments</h2>
+          <h2 className="text-lg font-semibold text-slate-900">Latest enrollments</h2>
           <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
             <table className="w-full table-fixed md:table-auto">
               <thead className="bg-slate-50/80 text-xs font-medium uppercase tracking-wide text-slate-500 border-b border-slate-200">
