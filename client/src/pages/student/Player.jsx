@@ -174,7 +174,7 @@ const Player = () => {
               <YouTube videoId={playerData.youtubeId} opts={{playerVars: {autoplay: 1}}} iframeClassName="w-full aspect-video" />
               <div className='flex justify-between items-center mt-1'>
                 <p>{playerData.chapter}.{playerData.lecture} {playerData.lectureTitle}</p>
-                <button onClick={() => markLectureAsCompleted(playerData.lectureId)} className='text-blue-600'>{progressData && progressData.lectureCompleted.includes(playerData.lectureId) ? 'Completed': 'Mark Complete'}</button>
+                <button onClick={() => markLectureAsCompleted(playerData.lectureId)} className='text-blue-600 cursor-pointer'>{progressData && progressData.lectureCompleted.includes(playerData.lectureId) ? 'Completed': 'Mark Complete'}</button>
               </div>
             </div>
           )
