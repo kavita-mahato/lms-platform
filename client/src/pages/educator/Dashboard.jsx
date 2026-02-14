@@ -9,8 +9,6 @@ const Dashboard = () => {
 
   const { isEducator, currency, getToken, backendUrl } = useContext(AppContext);
   const [dashboardData, setDashboardData] = useState(null);
-  console.log(dashboardData);
-  console.log(setDashboardData);
 
   // Fetch dashboard data
   const fetchDashboardData = async () => {
@@ -33,7 +31,6 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    console.log("isEducator:", isEducator);
     if (isEducator) {
       fetchDashboardData();
     }
